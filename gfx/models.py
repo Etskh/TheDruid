@@ -10,3 +10,24 @@ class Mesh(models.Model):
 
 
 
+class Texture(models.Model):
+	tag = models.CharField(max_length=64)
+	
+	texture= models.File()
+
+	def __str__(self):
+		return self.tag
+
+
+class Material(models.Model):
+	tag = models.CharField(max_length=64)
+	
+	material= models.File()
+
+	def __str__(self):
+		return self.tag
+
+
+
+
+
