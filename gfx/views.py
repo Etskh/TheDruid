@@ -1,3 +1,6 @@
 from django.shortcuts import render
 
-# Create your views here.
+def get_mesh( request, poll_id):
+	return HttpResponse("You're looking at mesh %s." % mesh_id)
+
+
