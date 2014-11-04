@@ -10,3 +10,6 @@ def get_texture( request, texture_id):
 def get_material( request, material_id):
 	return HttpResponse("You're looking at material %s." % material_id )
 
+def get_shader( request, material_id):
+	return HttpResponse("You're looking at shader %s." % shader_id )
+
