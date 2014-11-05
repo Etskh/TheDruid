@@ -10,6 +10,10 @@ import uuid
 
 
 class Mesh(models.Model):
+	class Meta:
+		verbose_name = "mesh"
+		verbose_name_plural = "meshes"
+
 	def get_upload_place(instance, filename):
 		filename, fileExtension = os.path.splitext(filename)
 		randomID = uuid.uuid4()
@@ -53,7 +57,8 @@ class ShaderVariable(models.Model):
 		( 3, 'Vector4'),
 		( 4, 'Matrix3'),
 		( 5, 'Matrix4'),
-		( 6, 'Texture'),
+		( 6, 'Colour'),
+		( 7, 'Texture'),
 	)
 
 	tag = models.CharField(max_length=64)
@@ -89,13 +94,39 @@ class Shader(models.Model):
 
 
 
-
-
-
 class Material(models.Model):
 	name = models.CharField(max_length=64)
 	shaders = models.ManyToManyField(Shader)
-
+	uniforms= models.ManyToManyField(ShaderVariable)
+	
+	def getVertex(self):
+		shader = self.shaders.filter( type=0 )
+		try:
+			return shader[0].shader
+		except IndexError:
+			return ''
+	
+	def getFragment(self):
+		shader = self.shaders.filter( type=1 )
+		try:
+			return shader[0].shader
+		except IndexError:
+			return ''
+	
+	def getGeometry(self):
+		shader = self.shaders.filter( type=2 )
+		try:
+			return shader[0].shader
+		except IndexError:
+			return ''
+	
+	def getTessellation(self):
+		shader = self.shaders.filter( type=3 )
+		try:
+			return shader[0].shader
+		except IndexError:
+			return ''
+	
 	def __str__(self):
 		return self.name
 
