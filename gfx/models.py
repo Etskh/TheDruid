@@ -138,14 +138,12 @@ class Material(models.Model):
 
 class Model(models.Model):
 
+	name = models.CharField( max_length=64 )
 	mesh = models.ForeignKey('Mesh', related_name='+')
 	material = models.ForeignKey('Material', related_name='+')
 	
 	def __str__(self):
-		return self.mesh.tag + "-" + self.material.name	
+		return "{}({}-{})".format( self.name, self.mesh.tag, self.material.name )
 	
-	
-
-
 
 
