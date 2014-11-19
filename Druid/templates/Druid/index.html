@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<title>The Druid</title>
+		
+		<!-- Meta tags -->
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!-- Stylesheets -->
+		<link href="{% static 'extern/bootstrap-3.3.0/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+		{% if debug %}
+			<link href="{% static 'Druid/Druid.less' %}" rel="stylesheet" type="text/less"/>
+		{% else %}
+			<link href="{% static 'Druid/Druid.min.css' %}" rel="stylesheet" type="text/css"/>
+		{% endif %}
+	</head>
+	<body>
+		<div id="render_container"></div>
+	
+		<!-- Scripts -->
+		<div id="scripts">
+			<script type="text/javascript" src="{% static 'extern/jquery-2.1.1/jquery-2.1.1.min.js' %}"></script>
+			<script type="text/javascript" src="{% static 'extern/modernizr-2.6.2/modernizr-2.6.2.min.js' %}"></script>
+			{% if debug %}
+				<script type="text/javascript" src="{% static 'extern/less-2.0.0/less.min.js' %}"></script>
+			{% endif %}
+			<script type="text/javascript" src="{% static 'Druid/Druid.js' %}"></script>
+		</div>
+	</body>
+</html>
