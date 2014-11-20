@@ -7,6 +7,7 @@ urlpatterns = patterns('',
 	url(r'^texture/([0-9]+)$', views.get_texture, name='get_texture'),
 	url(r'^material/([0-9]+)$', views.get_material, name='get_material'),
 	url(r'^shader/([0-9]+)$', views.get_shader, name='get_shader'),
+	url(r'^models/search$', views.search_models, name='search_models'),
 )
 
 

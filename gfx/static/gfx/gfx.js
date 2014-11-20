@@ -97,7 +97,7 @@ var GFX = function(window, document) {
 		
 			for( var m=0, len=_resources.models.length; m < len; m++) {
 				if( _resources.models[m].tag == modelTag ) {
-					return callback( _resources.models[m] );
+					callback( _resources.models[m] );
 				}
 			}
 			

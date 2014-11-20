@@ -94,6 +94,10 @@ class Shader(models.Model):
 
 
 
+
+
+
+
 class Material(models.Model):
 	name = models.CharField(max_length=64)
 	shaders = models.ManyToManyField(Shader)
@@ -143,7 +147,7 @@ class Model(models.Model):
 	material = models.ForeignKey('Material', related_name='+')
 	
 	def __str__(self):
-		return "{}({}-{})".format( self.name, self.mesh.tag, self.material.name )
+		return "{0}({1}-{2})".format( self.name, self.mesh.tag, self.material.name )
 	
 
 
