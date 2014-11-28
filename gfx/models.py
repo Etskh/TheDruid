@@ -30,7 +30,6 @@ class Mesh(models.Model):
 
 
 
-
 class Texture(models.Model):
 	def get_upload_place(instance, filename):
 		filename, fileExtension = os.path.splitext(filename)
@@ -42,6 +41,8 @@ class Texture(models.Model):
 	
 	def __str__(self):
 		return self.tag
+
+
 
 
 
@@ -103,33 +104,24 @@ class Material(models.Model):
 	shaders = models.ManyToManyField(Shader)
 	uniforms= models.ManyToManyField(ShaderVariable)
 	
-	def getVertex(self):
-		shader = self.shaders.filter( type=0 )
+	def getShaderByType(self, type):
+		shader = self.shaders.filter( type=type )
 		try:
-			return shader[0].shader
+			return ''.join(shader[0].shader.splitlines())
 		except IndexError:
 			return ''
 	
+	def getVertex(self):
+		return self.getShaderByType( 0 )
+		
 	def getFragment(self):
-		shader = self.shaders.filter( type=1 )
-		try:
-			return shader[0].shader
-		except IndexError:
-			return ''
+		return self.getShaderByType( 1 )
 	
 	def getGeometry(self):
-		shader = self.shaders.filter( type=2 )
-		try:
-			return shader[0].shader
-		except IndexError:
-			return ''
+		return self.getShaderByType( 2 )
 	
 	def getTessellation(self):
-		shader = self.shaders.filter( type=3 )
-		try:
-			return shader[0].shader
-		except IndexError:
-			return ''
+		return self.getShaderByType( 3 )
 	
 	def __str__(self):
 		return self.name

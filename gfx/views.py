@@ -3,6 +3,10 @@ from django.http import HttpResponse
 from gfx.models import Material, Mesh, Shader, Model
 import subprocess
 import os
+import base64
+
+
+
 
 def get_mesh( request, mesh_id):
 	
@@ -33,20 +37,30 @@ def get_mesh( request, mesh_id):
 
 
 
+
+
 def get_texture( request, texture_id):
 	return HttpResponse("You're looking at texture %s." % texture_id )
+
+
+
 
 def get_material( request, material_id):
 	material = get_object_or_404(Material, pk=material_id)
 	return HttpResponse(
 		"""{{
-			"vertex":  "{0}",
-			"fragment":"{1}"
-		}}""".format(
-			material.getVertex(),
-			material.getFragment()
+			"id":{0},
+			"vertex":"{1}",
+			"fragment":"{2}"
+		}}
+		""".format(
+			material.id,
+			base64.b64encode(material.getVertex()),
+			base64.b64encode(material.getFragment())
 		)
 	)
+
+
 
 def get_shader( request, shader_id):
 	shader = get_object_or_404(Shader, pk=shader_id)
@@ -62,12 +76,24 @@ def get_shader( request, shader_id):
 		)
 	)
 
+
+
 def search_models( request ):
 	model = get_object_or_404(Model, name=request.GET.get('tag', None))
 	return HttpResponse(
 		"""{{
-			"id":{0}
+			"id":{0},
+			"tag":"{1}",
+			"mesh_id":{2},
+			"material_id":{3}
 		}}""".format(
-			model.id
+			model.id,
+			model.name,
+			model.mesh.id,
+			model.material.id
 		)
 	)
+
+
+
+

@@ -86,8 +86,8 @@ document.body.onload = function() {
 	require('gfx/gfx.js', 'GFX', function( gfx ) {
 		camera = gfx.getCamera();
 		
-		gfx.loadModel('Endless-Fields', function(model) {
-			console.log("Druid ready");
+		gfx.createModel('Endless-Fields', [0,0,0], function(sceneItem) {
+			console.log(sceneItem);
 		});
 		
 	});
