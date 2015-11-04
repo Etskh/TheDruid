@@ -4,14 +4,14 @@ from gfx.models import Material, Mesh, Shader, Model
 import subprocess
 import os
 import base64
-
+import platform
 
 
 
 def get_mesh( request, mesh_id):
-	
+
 	mesh = get_object_or_404(Mesh, pk=mesh_id)
-	
+
 	"""
 		TODO:	Make it grab it from the cache instead of generating it
 				every single time like some savage that can't handle living
@@ -19,20 +19,23 @@ def get_mesh( request, mesh_id):
 	"""
 	if( False ):#exportedMesh.findwith( mesh_id )):
 		pass
-	
+
 	#
 	# Can't find it, then grab the mesh, and export it
-	#	
+	#
 	processName = None
-	if( True ):
+	sys = platform.system()
+	if( sys == "Darwin" ):
 		processName = '/Applications/blender.app/Contents/MacOS/blender'
-	
+	else:
+		return HttpResponse("Unknown operating system `{}`".format(sys))
+
 	if( subprocess.call([processName,"--background", mesh.mesh.name, "--python","./gfx/export.py"]) == 1 ):
 		return HttpResponse("There was an error")
-	
+
 	filename, fileExtension = os.path.splitext(mesh.mesh.name)
 	newFileContents = open("{0}.js".format(filename)).read()
-	
+
 	return HttpResponse(newFileContents)
 
 
@@ -47,6 +50,10 @@ def get_texture( request, texture_id):
 
 def get_material( request, material_id):
 	material = get_object_or_404(Material, pk=material_id)
+
+	vertSource = "{}".format( material.getVertex() )
+	fragSource = "{}".format( material.getFragment() )
+
 	return HttpResponse(
 		"""{{
 			"id":{0},
@@ -55,8 +62,8 @@ def get_material( request, material_id):
 		}}
 		""".format(
 			material.id,
-			base64.b64encode(material.getVertex()),
-			base64.b64encode(material.getFragment())
+			base64.b64encode( vertSource ),
+			base64.b64encode( fragSource ),
 		)
 	)
 
@@ -93,7 +100,3 @@ def search_models( request ):
 			model.material.id
 		)
 	)
-
-
-
-

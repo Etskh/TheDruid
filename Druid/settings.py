@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'extern',
     'Druid',
 	'gfx',
 )
@@ -83,5 +84,3 @@ INTERNAL_IPS = ( '127.0.0.1', )
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-
-

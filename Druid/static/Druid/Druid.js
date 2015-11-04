@@ -1,5 +1,7 @@
 document.body.onload = function() {
-	
+
+
+
 	ES6Compat = function( String, Boolean, Number, Function) {
 		check = "isString";
 		if ( !(check in String.prototype) ) {
@@ -11,7 +13,7 @@ document.body.onload = function() {
 		if ( !(check in Number.prototype) ) {
 			Number.prototype.isString = function() { return false; }
 			Number.prototype.isNumber = function() { return true; }
-			Number.prototype.isFunction = function() { return false; }	
+			Number.prototype.isFunction = function() { return false; }
 			Number.prototype.isBoolean = function() { return false; }
 		}
 		if ( !(check in Function.prototype) ) {
@@ -29,20 +31,24 @@ document.body.onload = function() {
 		console.log("ES6 compatibility enabled");
 	}
 	ES6Compat(String,Number,Boolean,Function);
-	
+
+
+
+
+
 	window.require = function( url, stringOrCallback, callback ) {
-		
+
 		// If the second argument is not a string,
 		// then it is a callback
 		//
 		if( stringOrCallback && !stringOrCallback.isString() ) {
 			callback = stringOrCallback;
 		}
-		
+
 		var scriptBlock = document.getElementById("scripts");
 		var script = document.createElement("script");
 		script.src = 'static/'+url;
-	
+
 		// Handle Script loading
 		var done = false;
 
@@ -53,7 +59,7 @@ document.body.onload = function() {
 					this.readyState == "loaded" || this.readyState == "complete")
 				) {
 				done = true;
-             	
+
              	// If they sent a callback (which they should have)
              	//
 				if (callback) {
@@ -69,7 +75,7 @@ document.body.onload = function() {
 							return false;
 						}
 					}
-				
+
 					callback(stringVal);
 				}
 
@@ -80,17 +86,17 @@ document.body.onload = function() {
 
 		scriptBlock.appendChild(script);
 	};
-	
-	
-	
-	require('gfx/gfx.js', 'GFX', function( gfx ) {
-		camera = gfx.getCamera();
-		
-		gfx.createModel('Endless-Fields', [0,0,0], function(sceneItem) {
-			console.log(sceneItem);
+
+
+	require('extern/threejs/three.min.js', 'THREE', function() {
+		require('gfx/gfx.js', 'GFX', function( GFX ) {
+			camera = GFX.getCamera();
+			GFX.createModel('Endless-Fields', [0,0,-20], function(sceneItem) {
+				console.log("Finished");
+			});
 		});
-		
 	});
-	
-	
+
+
+
 }
